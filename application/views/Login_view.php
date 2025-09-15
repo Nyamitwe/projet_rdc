@@ -61,7 +61,7 @@
 
           <br>
 
-          <center><a style="color: #17a2b8" href="<?= base_url() ?>" ><b> << Retour à la page d'accueil</b></a></center>
+          <center><a style="color: #17a2b8" href="<?= base_url('New_requerant') ?>" ><b> S'inscrire</b></a></center>
 
 
           <br>

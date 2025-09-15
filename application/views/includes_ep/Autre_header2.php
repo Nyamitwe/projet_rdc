@@ -12,9 +12,9 @@
         <section style="background-image: url(<?php echo base_url() ?>template/assets_new/img/bg_pms_header.png)" id="topbar" class="d-flex align-items-center">
             <div class="container d-flex justify-content-center justify-content-md-between">
                 <div class="contact-info d-none d-sm-flex align-items-center">
-                    <i class="fa fa-envelope d-flex align-items-center"><a class="topbar_icon" href="mailto:contact@pms.gov.bi">contact@pms.gov.bi</a></i>
-                    <i class="fa fa-phone"><a class="topbar_icon" href="tel:+25722248153">+257 22 24 81 53 - Bujumbura,</a><a class="topbar_icon" href="tel:+25722402308">+257 22 40 23 08 - Gitega,</a><a class="topbar_icon" href="tel:+25722302385">+257 22 30 23 85 - Ngozi</a></i>
-                </div>
+                    <i class="fa fa-envelope d-flex align-items-center"><a class="topbar_icon" href="mailto:ericndayizeye2@gmail.com">ericndayizeye2@gmail.com</a></i>
+                    <i class="fa fa-phone"><a class="topbar_icon" href="tel:+25769245250">+257 69 245 250 - Bujumbura,</a>
+                        <a class="topbar_icon" href="tel:+25722402308">+257 22 40 23 08 - Gitega,</a><a class="topbar_icon" href="tel:+25722302385">+257 22 30 23 85 - Ngozi</a></i>                 </div>
                 <div class="social-links d-flex align-items-center">
                     <a href=""><i class="fa fa-facebook d-flex align-items-center"></i></a>
                     <a href=""><i class="fa fa-twitter d-flex align-items-center"></i></a>

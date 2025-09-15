@@ -29,8 +29,8 @@ function save()
   $ids = $this->input->post('nationalite_id');
 
    $password = password_hash($this->input->post('PASSWORD1'), PASSWORD_DEFAULT);
-   $codepays=$this->Model->getRequete('SELECT CODE_TEL FROM countries WHERE id = '.$ids.' ');
-$codepays = !empty($codepays['CODE_TEL']) ?? '';
+   $codepays=$this->Model->getRequeteOne('SELECT CODE_TEL FROM countries WHERE id = '.$ids.' ');
+$codepays = (isset($codepays['CODE_TEL'])) ?$codepays['CODE_TEL']: '';
     $data_sf_guard_user_profile=array(
         'email'=>$this->input->post('EMAIL'),
         'username'=>$this->input->post('EMAIL'),   
