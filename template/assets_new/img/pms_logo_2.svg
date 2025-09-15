@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="240" viewBox="0 0 800 240" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7FB0FF" />
+      <stop offset="100%" stop-color="#163AA8" />
+    </linearGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Transparent background (so image is actually transparent) -->
+  <rect width="100%" height="100%" fill="none" />
+
+  <!-- Crescent / arch -->
+  <path d="M40 120
+           C 120 20, 420 10, 760 70
+           C 700 40, 480 25, 120 80
+           C 80 95, 60 110, 40 120 Z"
+        fill="#0C2B8A" opacity="1" />
+
+  <!-- Inner negative cut to create crescent shape -->
+  <path d="M120 120
+           C 260 70, 520 50, 740 90
+           C 560 70, 340 85, 120 120 Z"
+        fill="#ffffff" opacity="1" />
+
+  <!-- Main title text -->
+  <text x="60" y="160" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="56" fill="url(#textGrad)" letter-spacing="2">
+    STARAFRICA <tspan fill="#163AA8">GROUP</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="60" y="195" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="20" fill="#163AA8" letter-spacing="1.2">
+    MORE THAN DREAMS DELIVERED
+  </text>
+</svg>

@@ -1,0 +1,16 @@
+<div class="row col-md-12">
+  <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="<?=$menu1;?>" href="<?=base_url('levee_hypotheque/Levee_Hupotheque')?>"><i class="fa fa-bars" aria-hidden="true"></i>  Applications</a>
+    </li>
+    <li class="nav-item">
+        <a class="<?=$menu2;?>"  href=""><i class="fa fa-inbox" aria-hidden="true"></i>  Mes tâches</a>
+    </li>
+    <li class="nav-item">
+        <a class="<?=$menu3;?>"  href=""><i class="fa fa-clock-o" aria-hidden="true"></i>  Tâches terminées</a>
+    </li>
+    <li class="nav-item">
+        <a class="<?=$menu4;?>"  href=""><i class="fa fa-comments" aria-hidden="true"></i>  Nouveaux messages</a>
+    </li>
+</ul>
+</div>

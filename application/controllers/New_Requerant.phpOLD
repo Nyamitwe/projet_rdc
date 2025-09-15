@@ -1,0 +1,258 @@
+<?php 
+
+	/**
+	 * Ir raoul 
+     * 71246149 
+     * raoul@mediabox.bi
+	   Creation des comptes, connexion des utilisateurs, voulant demander des transferts mais n ayant pas de comptes dans le systeme.
+	   Le 26/03/2024
+	 */
+      class New_Requerant extends CI_Controller
+      {
+
+          function __construct()
+          {
+			# code...
+             parent::__construct();
+         }
+
+        //Fonction principale
+
+         function index()
+         {
+           $data['provinces']=$this->Model->getRequete('SELECT * FROM provinces');
+           $data['nationalites']=$this->Model->getRequete('SELECT id,name FROM countries ORDER BY name ASC');
+	    //$data['provinces']=array();
+           $data['PROVINCE_ID']='';
+           $this->load->view('New_Requerant_View',$data);
+       }
+
+        //recherche des communes a partir de la province
+       function get_commune()
+       {
+           $commune= $this->Model->getList("communes",array('PROVINCE_ID'=>$this->input->post('PROVINCE_ID')));
+
+           $datas= '<select type="text" class="form-control" name="COMMUNE_ID" id="COMMUNE_ID">  <option value="">Sélectionner</option>';
+
+
+
+           foreach($commune as $commun){
+
+
+              $datas.= '<option value="'.$commun["COMMUNE_ID"].'">'.$commun["COMMUNE_NAME"].'</option>';
+          }
+
+          $datas.= '</select>';
+
+          echo $datas;
+
+      }
+
+      //recherche des zones a partir de la commune
+      function get_zone()
+      {
+
+        $commune= $this->Model->getList("pms_zones",array('COMMUNE_ID'=>$this->input->post('COMMUNE_ID')));
+
+        $datas= '<select type="text" class="form-control" name="ZONE_ID" id="ZONE_ID">  <option value="">Sélectionner</option>';
+
+        foreach($commune as $commun)
+        {
+
+
+          $datas.= '<option value="'.$commun["ZONE_ID"].'">'.$commun["ZONE_NAME"].'</option>';
+      }
+
+      $datas.= '</select>';
+
+      echo $datas;
+
+  }
+
+
+      //recherche des collines a partir de la province
+  function get_colline()
+  {
+
+    $commune= $this->Model->getList("collines",array('ZONE_ID'=>$this->input->post('ZONE_ID')));
+
+    $datas= '<select type="text" class="form-control" name="ZONE_ID" id="ZONE_ID"  >
+    <option value="">Sélectionner</option>';
+
+    foreach($commune as $commun){
+
+
+      $datas.= '<option value="'.$commun["COLLINE_ID"].'">'.$commun["COLLINE_NAME"].'</option>';
+  }
+
+  $datas.= '</select>';
+
+  echo $datas;
+
+}
+
+      //Enregistrement des donnees dans la base
+function save()
+{
+      //$get_parcelle = $this->Model->getRequeteOne('SELECT * FROM  pms_parcelle WHERE EST_OCCUPE=0'); 
+      //print_r($get_parcelle['NUM_PARCELLE']);exit();
+
+
+
+ $this->form_validation->set_rules('PROFIL1', '', 'required',array("required"=>"<font color='red'>Le profil est requis</font>"));
+ $this->form_validation->set_rules('NOM', '', 'required',array("required"=>"<font color='red'>Le nom est requis</font>"));
+ $this->form_validation->set_rules('PRENOM', '', 'required',array("required"=>"<font color='red'>Le nom est requis</font>"));
+ $this->form_validation->set_rules('CNI', '', 'required',array("required"=>"<font color='red'>Le nom est requis</font>"));
+
+ $this->form_validation->set_rules('PROVINCE_ID', '', 'required',array("required"=>"<font color='red'>La province est requise</font>"));
+
+ $this->form_validation->set_rules('COMMUNE_ID', '', 'required',array("required"=>"<font color='red'>La commune est requise</font>"));
+
+ $this->form_validation->set_rules('ZONE_ID', '', 'required',array("required"=>"<font color='red'>La zone est requise</font>"));
+ $this->form_validation->set_rules('COLLINE_ID', '', 'required',array("required"=>"<font color='red'>La colline est requise</font>"));
+ $this->form_validation->set_rules('USERNAME1', '', 'required',array("required"=>"<font color='red'>Le nom d'utilisateur est requis</font>"));
+
+ $this->form_validation->set_rules('PASSWORD1', '', 'required',array("required"=>"<font color='red'>Le mot de passe est requis</font>"));
+
+ $this->form_validation->set_rules('TEL1', '', 'required',array("required"=>"<font color='red'>Le numéro de télephone est requis</font>"));
+
+ $this->form_validation->set_rules('PASSWORD2', '', 'required',array("required"=>"<font color='red'>Confirmer le mot de passe</font>"));
+ $this->form_validation->set_rules('DATE_NAISSANCE', '', 'required',array("required"=>"<font color='red'>La date de naissance est obligatoire</font>"));
+ $this->form_validation->set_rules('SEXE_ID', '', 'required',array("required"=>"<font color='red'>Le genre est obligatoire</font>"));
+
+$this->form_validation->set_rules('nationalite_id', '', 'required',array("required"=>"<font color='red'>Le champ est obligatoire</font>"));
+$this->form_validation->set_rules('DATE_DELIVRANCE', '', 'required',array("required"=>"<font color='red'>Le champ est obligatoire</font>"));
+$this->form_validation->set_rules('LIEU_DELIVRANCE', '', 'required',array("required"=>"<font color='red'>Le champ est obligatoire</font>"));
+
+$this->form_validation->set_rules('NOM_PRENOM_PERE', '', 'required',array("required"=>"<font color='red'>Le champ est obligatoire</font>"));
+$this->form_validation->set_rules('NOM_PRENOM_MERE', '', 'required',array("required"=>"<font color='red'>Le champ est obligatoire</font>"));
+
+
+
+ if ($this->form_validation->run() == FALSE)
+ {
+
+    $data['provinces']=$this->Model->getList('provinces');
+    $data['PROVINCE_ID']=$this->input->post('PROVINCE_ID');
+    $data['nationalites']=$this->Model->getRequete('SELECT id,name FROM countries ORDER BY name ASC');
+    $this->load->view('New_Requerant_View',$data);
+}
+
+else
+{
+   
+
+    $data_sf_guard_user_profile=array(
+        'email'=>$this->input->post('EMAIL'),
+        'username'=>$this->input->post('USERNAME1'),   
+        'sexe_id'=>$this->input->post('SEXE_ID'),                           
+        'fullname'=>$this->input->post('NOM').' '.$this->input->post('PRENOM'),
+        'date_naissance'=>$this->input->post('DATE_NAISSANCE'),
+        'mobile'=>$this->input->post('TEL1'),
+        'registeras'=>8,
+        'date_delivrance'=>$this->input->post('DATE_DELIVRANCE'),
+        'country_code'=>$this->input->post('nationalite_id'),
+        'lieu_delivrance_cni'=>$this->input->post('LIEU_DELIVRANCE'),
+                   // 'systeme_id'=>2,
+        'cni'=>$this->input->post('CNI'),
+        'password'=>password_hash($this->input->post('PASSWORD1'), PASSWORD_DEFAULT),
+        'profile_pic'=>$this->upload_file_cni('PHOTO_PROFIL'),
+        'path_cni'=>$this->upload_file_cni('CNI_IMAGE_PROP'),
+        'numerise'=>0,
+        'provence_id'=>$this->input->post('PROVINCE_ID'),
+        'father_fullname'=>$this->input->post('NOM_PRENOM_PERE'),
+        'mother_fullname'=>$this->input->post('NOM_PRENOM_MERE'),
+        'rc'=>$this->input->post('RC'),
+        'nif'=>$this->input->post('NIF'),
+        'zone_id'=>$this->input->post('ZONE_ID'),
+        'colline_id'=>$this->input->post('COLLINE_ID'),
+        'path_signature'=> $this->upload_file_signature('PHOTO_SIGNATURE'),
+        'new_buyer'=>1,
+        'commune_id'=>$this->input->post('COMMUNE_ID')
+    );
+    
+
+
+    $this->Model->create('sf_guard_user_profile',$data_sf_guard_user_profile);
+
+    $name='Mr '.$this->input->post('NOM').' '.$this->input->post('PRENOM').'';
+
+
+    if ($this->input->post('SEXE_ID')==2) {
+     $name='Mme '.$this->input->post('NOM').' '.$this->input->post('PRENOM').'';
+ }
+ $message="Bonjour ".$requerant['fullname'].",
+ Votre compte a ete cree avec succees,
+ vos identifiants sont:
+ Nom d'utilisateur:".$this->input->post('USERNAME1')."
+ Mot de passe:".$this->input->post('USERNAME1')."
+
+ Cliquez sur le lien suivant pour vous connecter:
+ ".base_url('Login').",
+ Cordialement.";
+
+ $mailTo=$this->input->post('EMAIL');
+
+ $subject='Identifiants de connexion';
+
+
+ $this->notifications->send_mail($mailTo,$subject,$cc_emails=array(),$message,$attach=array());
+
+
+
+
+ $message = "<div class='alert alert-success text-center'>Enregistrement fait avec succes</div>";
+ $this->session->set_flashdata(array('message'=>$message));
+ redirect(base_url('Login'));
+
+}
+
+
+}
+
+
+    //PERMET L'UPLOAD DE LA SIGNATURE
+public function upload_file_signature($input_name)
+{
+    $nom_file = $_FILES[$input_name]['tmp_name'];
+    $nom_champ = $_FILES[$input_name]['name'];
+    $ext=pathinfo($nom_champ, PATHINFO_EXTENSION);
+    $repertoire_fichier = FCPATH . 'uploads/doc_scanner/';  
+    $code=uniqid();
+    $name=$code . 'SIGNATURE.' .$ext;
+    $file_link = $repertoire_fichier . $name;
+
+
+        // $fichier = basename($nom_champ);
+    if (!is_dir($repertoire_fichier)) {
+        mkdir($repertoire_fichier, 0777, TRUE);
+    }
+    move_uploaded_file($nom_file, $file_link);
+    return $name;
+}
+
+
+
+    //PERMET L'UPLOAD DE L'IMAGE CNI / PASSEPORT
+public function upload_file_cni($input_name)
+{
+    $nom_file = $_FILES[$input_name]['tmp_name'];
+    $nom_champ = $_FILES[$input_name]['name'];
+    $ext=pathinfo($nom_champ, PATHINFO_EXTENSION);
+    $repertoire_fichier = FCPATH . 'uploads/doc_scanner/';
+    $code=uniqid();
+    $name=$code . 'IMAGE_CNI.' .$ext;
+    $file_link = $repertoire_fichier . $name;
+
+
+        // $fichier = basename($nom_champ);
+    if (!is_dir($repertoire_fichier)) {
+        mkdir($repertoire_fichier, 0777, TRUE);
+    }
+    move_uploaded_file($nom_file, $file_link);
+    return $name;
+}
+
+
+}
+?>
