@@ -18,6 +18,7 @@ Eric ndayizeye
          {
           
            $data['nationalites']=$this->Model->getRequete('SELECT * FROM countries');
+           $data['profiles']=$this->Model->getRequete('SELECT * FROM profiles');
            $this->load->view('New_Requerant_View',$data);
        }
 
@@ -40,7 +41,7 @@ $codepays = (isset($codepays['CODE_TEL'])) ?$codepays['CODE_TEL']: '';
         'mobile'=>$codepays.$this->input->post('TEL1'),
         'country_code'=>$this->input->post('nationalite_id'),
         'password'=>$password,
-        'PROFIL_ID'=>0,
+        'PROFIL_ID'=>$this->input->post('PROFIL_ID'),
         'is_active'=>1,
         
     );
@@ -68,7 +69,7 @@ $codepays = (isset($codepays['CODE_TEL'])) ?$codepays['CODE_TEL']: '';
 
  $message = "<div class='alert alert-success text-center'>Enregistrement fait avec succes</div>";
  $this->session->set_flashdata(array('message'=>$message));
- redirect(base_url('Login'));
+ redirect(base_url('Utilisateurs'));
 }
 
 

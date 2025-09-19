@@ -1,22 +1,19 @@
   
-
-
-
     <meta charset="UTF-8">
   
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <meta name="description" content="Burundi Property Management System">
+    <meta name="description" content="StarAfrica Group">
     
-    <meta name="keywords" content="transfert propriété Burundi, DTF Burundi, Direction des Titres Fonciers Burundi">
+    <meta name="keywords" content="StarAfrica Group"> 
   
-    <meta name="author" content="Mediabox Burundi">
+    <meta name="author" content="StarAfrica Group">
 
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <meta name="copyright" content="Mediabox Burundi, https://mediabox.bi/">
+  <meta name="copyright" content="StarAfrica Group, https://starafrica.com/">
       <!-- site metas -->
-      <title>Property Management System (PMS)</title>
+      <title>StarAfrica Group</title>
 
       <!-- site icon -->
       <link rel="icon" href="<?php echo base_url() ?>template/images/favicon-16x16.png" type="image/png" />
@@ -37,23 +34,12 @@
       <link rel="stylesheet" href="<?php echo base_url() ?>template/css/perfect-scrollbar.css" />
       <!-- custom css -->
       <link rel="stylesheet" href="<?php echo base_url() ?>template/css/custom.css" />
-      <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-      <![endif]-->
-
-
-
-
          
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
  
        
 
- <link rel="stylesheet" href="<?php echo base_url() ?>template/css/buttons.dataTables.min.css" />
-
-  
-     
+ <link rel="stylesheet" href="<?php echo base_url() ?>template/css/buttons.dataTables.min.css" />  
       
       <link rel="stylesheet" href="<?php echo base_url() ?>template/onlinescripts/dataTables.bootstrap4.min.css" />
 
