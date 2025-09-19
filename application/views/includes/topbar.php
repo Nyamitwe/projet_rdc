@@ -26,7 +26,7 @@
 
                            
 
-                               <ul class="user_profile_dd">
+                              <!--  <ul class="user_profile_dd">
                                  <li>
                                     <a class="dropdown-toggle" data-toggle="dropdown"><span class="username"><i style="font-size: 18px;" class="fa fa-language" aria-hidden="true"></i> Lang</span></a>
                                     <div class="dropdown-menu">
@@ -39,7 +39,7 @@
 
                                     </div>
                                  </li>
-                              </ul>
+                              </ul> -->
  
                               
 
@@ -47,10 +47,13 @@
                                  <li>
                                     <a class="dropdown-toggle" data-toggle="dropdown"><span class="username"><i style="font-size: 22px;" class="fa fa-user-circle-o" aria-hidden="true"></i> <?=$this->session->userdata('PMS_NOM').' '.$this->session->userdata('PMS_PRENOM')?></span></a>
                                     <div class="dropdown-menu">
-                                       <a class="dropdown-item" href="<?= base_url() ?>parametrage/Backend_User_profile"><?=lang('menu_mon_profil')?></a>
-                                       <a style="color: red" class="dropdown-item" href="<?= base_url() ?>Login/do_logout"><span><?=lang('deconnexion')?></span> <i class="fa fa-sign-out"></i></a>
+                                       <a class="dropdown-item" href="<?= base_url() ?>parametrage/Backend_User_profile">Profil</a>
+                                       <a style="color: red" class="dropdown-item" href="<?= base_url() ?>Login/do_logout"><span>Déconnexion</span> <i class="fa fa-sign-out"></i></a>
                                     </div>
                                  </li>
+                              </ul>
+                              <ul>
+                                <li>.....</li>
                               </ul>
                               
                            </div>

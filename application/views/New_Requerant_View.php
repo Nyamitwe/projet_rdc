@@ -1,32 +1,42 @@
-<!DOCTYPE html>
-<html lang="en"> 
-<head>
-  <?php include VIEWPATH.'includes_ep/Autre_header2.php'; ?>
-  <?php include VIEWPATH.'includes/header.php'; ?>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <?php include VIEWPATH.'includes/header.php'; ?>
+  </head>
+  <body class="dashboard dashboard_1">
+    <div class="full_container">
+      <div class="inner_container">
 
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>template/datepicker/css/daterangepicker.css">
-  <link href="<?php echo base_url() ?>template/datepicker/css/master.css" rel="stylesheet">
-  <link href="<?php echo base_url() ?>template/datepicker/css/datepicker.css" rel="stylesheet">
+        <!-- Sidebar  -->
+        <?php include VIEWPATH.'includes/navybar.php'; ?> 
+        <!-- end sidebar -->
+        <!-- right content -->
+        <div id="content">
+          <!-- topbar -->
+          <!-- topbar -->
+          <?php include VIEWPATH.'includes/topbar.php'; ?> 
+          <!-- end topbar -->
+          <!-- end topbar -->
+          <!-- dashboard inner -->
+          <div class="midde_cont">
+            <div class="container-fluid" style="padding: 0px;">
+              <br>
+              <br>
+              <!-- row -->
+              <div class="row column1">
+                <div class="col-md-12">
+                  <div class="white_shd full margin_bottom_30">
+                    <div class="full graph_head">
+                      <a href="<?=base_url('/Utilisateurs/')?>" class="btn btn-dark" style="float: lefet;">Liste</a>
+                      <br><br>
+                          <a href="<?=base_url('/New_Requerant/Modifier')?>" class="btn btn-primary" style="float: right;">Modifier</a>
+                              <br><br>
+                     <?=$this->session->flashdata('message')?> 
+                    </div> 
 
-  <link href="<?php echo base_url() ?>template/datepicker/css/jquery.datetimepicker.min.css" rel="stylesheet">
+                    <div class="full price_table padding_infor_info">
+                      <form method="POST" id="myformcompt"  enctype="multipart/form-data" action="<?=base_url().'New_Requerant/save'?>">
 
-</head>
-<body class="inner_page login"> 
-  <div class="full_container">
-    <div class="container">
-      <div class="center verticle_center">
-        <div class="login_section">
-          <div class="logo_login">
-            <div class="center">
-              <img width="100" src="<?php echo base_url() ?>template/images/DTF_light_logo.png" alt="#" />
-            </div>
-          </div>
-          <div class="login_form">
-
-            <h4 class="text-center">APPLICATION</h4><br>
-            <?= $this->session->flashdata('message') ?>
-            <form method="POST" id="myformcompt"  enctype="multipart/form-data" action="<?=base_url().'New_Requerant/save'?>">
-              <fieldset style="display: block;" id="div_comp">
                 <div class="row mb-4">
                 
                     <div class="form-group col-lg-6" id="physique_nom">
@@ -55,7 +65,7 @@
                     <div class="form-group col-lg-6">
                       <label style="font-weight: 900; color:#454545">pays<span style="color:red;">*</span></label>
                       <select class="form-control info_perso_nationalite" onchange="affiche_loca()"  name="nationalite_id"  id="nationalite_id">
-                        <option value=""><?=lang('selectionner')?></option>
+                        <option value="">Sélectionner</option>
                         <?php foreach($nationalites as $nationalite) { 
                           if ($nationalite['id']==set_value('nationalite_id')) { 
 
@@ -71,6 +81,28 @@
                         <?php echo form_error('nationalite_id', '<div class="text-danger">', '</div>'); ?>
                         <span id="errnationalite_id" class="text-danger"></span>                                
                       </div>
+
+                      <div class="form-group col-lg-6">
+                      <label style="font-weight: 900; color:#454545">Profile<span style="color:red;">*</span></label>
+                      <select class="form-control" name="PROFIL_ID"  id="PROFIL_ID">
+                        <option value="">Sélectionner</option>
+                        <?php foreach($profiles as $profiles) { 
+                          if ($profiles['PROFIL_ID']==set_value('PROFIL_ID')) { 
+
+                            echo "<option value='".$profiles['id']."' selected>".$profiles['PROFIL_ID']." ".$nationalite['DESCRIPTION']."</option>";
+                            
+                          }  else{
+                            echo "<option value='".$profiles['PROFIL_ID']."' > ".$profiles['DESCRIPTION']."</option>"; 
+
+                            
+                          } }?>                     
+
+                        </select> 
+                        <?php echo form_error('PROFIL_ID', '<div class="text-danger">', '</div>'); ?>
+                        <span id="erPROFIL_ID" class="text-danger"></span>                                
+                      </div>
+
+
                       <div class="form-group col-lg-6">
                     <label style="font-weight: 900; color:#454545">Téléphone<span style="color:red;">*</span></label>
                       <input type="number" maxlength="8" minlength="8" class="form-control" placeholder="Tél" name="TEL1" id="TEL1">
@@ -106,361 +138,28 @@
                       </span> 
                     </button>
                   </div>
-
-                </fieldset>
-
-
               </form>
+                    </div>
+
+                  </div>       
+
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-<!-- jQuery -->
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<!-- wow animation -->
-<script src="js/animate.js"></script>
-<!-- select country -->
-<script src="js/bootstrap-select.js"></script>
-<!-- nice scrollbar -->
-<script src="js/perfect-scrollbar.min.js"></script>
-<script>
- var ps = new PerfectScrollbar('#sidebar');
-</script>
-<!-- custom js -->
-<script src="js/custom.js"></script>
-</body>
-<script type="text/javascript">
-  function get_form_moral(argument) {
-   document.getElementById("hide").style.display="none";
-   document.getElementById("hide2").style.display="none";
-     var PROFIL1=$("#PROFIL1").val();
-       // $('#hide_coproprietaires').hide();
-     if(PROFIL1==10){
-       // $('#hide_coproprietaires').show();
-     }
-  // alert(nationalit);
-  if(PROFIL1==3){
-   document.getElementById("physique_nom").style.display="block";
-   document.getElementById("hide").style.display="block";
-   document.getElementById("physique_prenom").style.display="block";
-   document.getElementById("physique_sexe").style.display="block";
-   document.getElementById("physique_date_naissance").style.display="block";
-   document.getElementById("physique_nom_prenom_mere").style.display="block";
-   document.getElementById("physique_nom_prenom_pere").style.display="block";
-   document.getElementById("moral_PRENOM").style.display="none";
-   document.getElementById("moral_NOM").style.display="none";
+    <!-- footer -->
 
-  }else{
-   document.getElementById("hide2").style.display="block";
-   document.getElementById("physique_nom").style.display="none";
-   document.getElementById("physique_prenom").style.display="none";
-   document.getElementById("physique_sexe").style.display="none";
-   document.getElementById("physique_date_naissance").style.display="none";
-   document.getElementById("physique_nom_prenom_mere").style.display="none";
-   document.getElementById("physique_nom_prenom_pere").style.display="none";
-   document.getElementById("moral_PRENOM").style.display="block";
-   document.getElementById("moral_NOM").style.display="block";
-  }
-   
-  }
-</script>
-
-<script>
- function affiche_loca(){
-  var nationalit=$("#nationalite_id").val();
-  // alert(nationalit);
- 
- }
-</script>      
-<script type="text/javascript">
- $(document).ready(function() {
-
-  $(function() {
-    $('input[name="DATE_NAISSANCE"]').daterangepicker({
-      singleDatePicker: true,
-      "autoApply":true,
-      autoUpdateInput: false,
-      showDropdowns: true,
-      maxYear: 2022,
-      minYear: 1901,
-
-    });
-  });
-});
-
-</script>
+  </div>
+  <!-- end dashboard inner -->
+</div>
+</div>
+</div>
+</div>
 
 <script type="text/javascript">
- // $('#inscr').on('click', function(ev) {
- //         document.getElementById('div_comp').style.display="block";
- //       });
-     </script>
-
-
-    <script type="text/javascript">
-     function verify1()
-     {
-
-       var input_tel=document.getElementById('TEL1');
-       var input_EMAIL=document.getElementById('EMAIL');
-
-       var numberReg =  /^[+0-9 ]+$/;
-       var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-       var Email = $('#EMAIL').val();
-
-       var tell1 = $('#TEL1').val();
-       var tell2 = $('#EMAIL').val();
-
-       var pwd1 = $('#PASSWORD1').val();
-       var pwd2 = $('#PASSWORD2').val();
-       $("#EMAIL").css("border", "1px solid green");
-       $("#TEL1").css("border", "1px solid green");
-       $("#EMAIL").css("border", "1px solid green");
-       $("#PASSWORD1").css("border", "1px solid green");
-       $("#PASSWORD2").css("border", "1px solid green");
-
-        $('#erEMAIL').html("");
-       var statut = true;
-       if (Email=="") {
-        statut = false;
-        $("#EMAIL").css("border", "1px solid red");
-        $('#erEMAIL').html("Ce champ est obligatoire");
-       }
-
-        $('#erPROFIL').html("");
-       $("#PROFIL1").css("border", "1px solid green");
-       if(($("#PROFIL1").val())=='')
-       {  
-        $('#erPROFIL').html('Nom obligatoire');
-       $("#PROFIL1").css("border", "1px solid red");
-        $("#PROFIL1").focus();
-        statut = false;
-        console.log(statut)
-      }
-
-      if(($("#PROFIL1").val())!='' && $("#PROFIL1").val()==3)
-       { 
-        $('#erNOM').text('');
-       $("#NOM").css("border", "1px solid green"); 
-      if(($("#NOM").val())=='')
-      {
-        $('#erNOM').text('Nom obligatoire');
-        $("#NOM").focus();
-       $("#NOM").css("border", "1px solid red");
-        statut = false;
-        console.log(statut)
-      }
-       $("#PRENOM").css("border", "1px solid green");
-        $('#erPRENOM').text('');
-      if(($("#PRENOM").val())=='')
-      {
-       $("#PRENOM").css("border", "1px solid red");
-        $('#erPRENOM').text('Prénom obligatoire');
-        $("#PRENOM").focus();
-        statut = false;
-        console.log(statut)
-      }
-       $("#SEXE_ID").css("border", "1px solid green");
-        $('#erSEXE_ID').text('');
-        if ($('#SEXE_ID').val() == "") {
-
-       $("#SEXE_ID").css("border", "1px solid red");
-    $('#erSEXE_ID').text('Le genre est obligatoire');
-    $("#SEXE_ID").focus();
-    statut = false;
-    console.log(statut)
-  } 
-
-        $('#erNOM_PRENOM_PERE').text('');
-       $("#NOM_PRENOM_PERE").css("border", "1px solid green");
-  if ($('#NOM_PRENOM_PERE').val() == "") {
-       $("#NOM_PRENOM_PERE").css("border", "1px solid red");
-    $('#erNOM_PRENOM_PERE').text('Le champ est obligatoire');
-
-    $("#NOM_PRENOM_PERE").focus();
-    statut = false;
-    console.log(statut)
-  } 
-        $('#erNOM_PRENOM_MERE').text('');
-       $("#NOM_PRENOM_MERE").css("border", "1px solid green");
-  if ($('#NOM_PRENOM_MERE').val() == "") {
-
-       $("#NOM_PRENOM_MERE").css("border", "1px solid red");
-    $('#erNOM_PRENOM_MERE').text('Le champ est obligatoire');
-
-    $("#NOM_PRENOM_MERE").focus();
-    statut = false;
-    console.log(statut)
-  } 
-}
-
-     if(($("#PROFIL1").val())!='' && $("#PROFIL1").val()==2)
-       { 
-        $('#erPRENOM').text('');
-       $("#PRENOM").css("border", "1px solid green");
-       if ($('#PRENOM').val() == "") {
-
-       $("#PRENOM").css("border", "1px solid red");
-    $('#erPRENOM').text('Le champ est obligatoire');
-
-    $("#PRENOM").focus();
-    statut = false;
-    console.log(statut)
-  } 
-
-       $("#NOM").css("border", "1px solid green");
-        $('#erNOM').text('');
-   if ($('#NOM').val() == "") {
-
-       $("#NOM").css("border", "1px solid red");
-    $('#erNOM').text('Le champ est obligatoire');
-
-    $("#NOM").focus();
-    statut = false;
-    console.log(statut)
-  } 
-
- }
-
-        $("#NIF").css("border", "1px solid green");
-        $('#errNIF').text('');
-   if ($('#NIF').val() == "") {
-
-       $("#NIF").css("border", "1px solid red");
-    $('#errNIF').text('Le champ est obligatoire');
-    statut = false;
-
-  } 
-
-       $("#RC").css("border", "1px solid green");
-        $('#errRC').text('');
-   if ($('#RC').val() == "") {
-    $('#errRC').text('Le champ est obligatoire');
-       $("#RC").css("border", "1px solid red");
-    statut = false;
-  } 
-
-
-       $("#TEL1").css("border", "1px solid green");
-        $('#erTEL1').text('');
-      if(($("#TEL1").val())=='')
-      {
-        $('#erTEL1').text('Téléphone obligatoire');
-       $("#TEL1").css("border", "1px solid red");
-        $("#TEL1").focus();
-        statut = false;
-        console.log(statut)
-      }
-
-
-      var input = document.getElementById('TEL1');
-  var value = input.value.toString(); // Convert the input value to a string
-
-  if (value.length === 8) {
-       $("#TEL1").css("border", "1px solid green");
-        $('#erTEL1').text('');
-  } else {
-    $('#erTEL1').text('Téléphone Invalide');
-    $("#TEL1").focus();
-       $("#TEL1").css("border", "1px solid red");
-    statut = false;
-    console.log(statut)
-  }
-
-  var input = document.getElementById('EMAIL');
-  var value2 = input.value.toString(); // Convert the input value to a string
-  if(($("#EMAIL").val())!='')
-  {
-    if (value2.length === 8) {
-        $('#erEMAIL').text('');
-       $("#EMAIL").css("border", "1px solid green");
-    // alert('Input has a length of 8.');
-  } else {
-    $('#erEMAIL').text('Téléphone Invalide');
-    $("#EMAIL").focus();
-       $("#EMAIL").css("border", "1px solid red");
-    statut = false;
-    console.log(statut)
-  }
-}
-
-
-  
-       $("#CNI").css("border", "1px solid green");
-        $('#erCNI').text('');
-  if(($("#CNI").val())=='')
-  {
-    $('#erCNI').text('CNI obligatoire');
-    $("#CNI").focus();
-       $("#CNI").css("border", "1px solid red");
-    statut = false;
-    console.log(statut)
-  }
-
-        $('#errDATE_DELIVRANCE').text('');
-       $("#DATE_DELIVRANCE").css("border", "1px solid green");
-  if ($('#DATE_DELIVRANCE').val() == "") {
-
-       $("#DATE_DELIVRANCE").css("border", "1px solid red");
-    $('#errDATE_DELIVRANCE').text('Le champ est obligatoire');
-
-    $("#DATE_DELIVRANCE").focus();
-    statut = false;
-    console.log(statut)
-  } 
-
-        $('#errLIEU_DELIVRANCE').text('');
-       $("#LIEU_DELIVRANCE").css("border", "1px solid green");
-  if ($('#LIEU_DELIVRANCE').val() == "") {
-
-       $("#LIEU_DELIVRANCE").css("border", "1px solid red");
-    $('#errLIEU_DELIVRANCE').text('Le champ est obligatoire');
-
-    $("#LIEU_DELIVRANCE").focus();
-    statut = false;
-    console.log(statut)
-  } 
-
-
-  var input = document.getElementById('CNI_IMAGE_PROP');
-  
-        $('#errCNI_IMAGE_PROP').text('');
-       $("#CNI_IMAGE_PROP").css("border", "1px solid green");
-  if (input.value === '') {
-   $('#errCNI_IMAGE_PROP').text('Le champ est obligatoire');
-       $("#CNI_IMAGE_PROP").css("border", "1px solid red");
-   $("#CNI_IMAGE_PROP").focus();
-   statut = false;
-   console.log(statut)
- } 
-
- if (Email != '') {
-        $('#erEMAIL').text('');
-       $("#EMAIL").css("border", "1px solid green");
-  if(!emailReg.test(Email))
-  {
-       $("#EMAIL").css("border", "1px solid red");
-    $('#erEMAIL').text('Email invalide');
-
-    $("#EMAIL").focus();
-    statut = false;
-    console.log(statut)
-  }
-}
-
-
-document.getElementById('hide_oui_non').style.display="block";
-// document.getElementById('hide_coproprietaires').style.display="block";
-// alert(statut)
-if (statut==true)
-{
-  exist_mail()
-}
-}
-
 function verify2() {
 
   var input_tel=document.getElementById('TEL1');
@@ -595,6 +294,18 @@ $("#EMAIL").css("border", "1px solid red");
   console.log(statut)
 } 
 
+$('#erPROFIL_ID').text('');
+var PROFIL_ID = $('#PROFIL_ID').val();
+if (PROFIL_ID == "") {
+
+  $('#erPROFIL_ID').text('Ce champs est obligatoire');
+$("#PROFIL_ID").css("border", "1px solid red");
+
+  $("#PROFIL_ID").focus();
+  statut = false;
+  console.log(statut)
+} 
+
 $('#loading_spinner2').hide();
 if (statut==true)
 {
@@ -659,3 +370,6 @@ $('#loading_spinner2').hide();
   
      
    </script>
+
+
+

@@ -49,14 +49,15 @@ public function listing()
     NOM,
     PRENOM,
     email,
+    is_active,
     mobile,
-    IF(SEXE_ID = 1, 'Masculin', 'Féminin') AS SEXE
-FROM sf_guard_user_profile
+    sf_guard_user_profile.PROFIL_ID,
+    profiles.DESCRIPTION,
+    IF(SEXE_ID = 1, 'Masculin', 'Féminin') AS SEXE,
+    IF(is_active = 1, 'Actif', 'Inactif') AS ETAT
+FROM sf_guard_user_profile left join profiles on profiles.PROFIL_ID= sf_guard_user_profile.PROFIL_ID
 WHERE 1";
 ;
-
- // print_r($query_principal);die();
-
  $limit = '';
  if (isset($_POST['length']) && $_POST['length'] != -1)
  {
@@ -89,37 +90,23 @@ WHERE 1";
   $u++; 
   $sub_array=array(); 
   $sub_array[]='<font color="#000000" size=2><label>'.$u.'</label></font>';
-  $sub_array[]='<center><font color="#000000" size=2><label>'.$row->NOM.' '.$row->PRENOM.'</label></font> </center>';
-  $sub_array[]='<center><font color="#000000" size=2><label>'.$row->email.'</label></font> </center>';
-  $sub_array[]='<center><font color="#000000" size=2><label>'.$row->mobile.'</label></font> </center>';     
-  $sub_array[]='<center><font color="#000000" size=2><label>'.$row->SEXE.'</label></font> </center>';     
+  $sub_array[]='<font color="#000000" size=2><label>'.$row->NOM.' '.$row->PRENOM.'</label></font> ';
+  $sub_array[]='<font color="#000000" size=2><label>'.$row->email.'</label></font> ';
+  $sub_array[]='<font color="#000000" size=2><label>'.$row->mobile.'</label></font> ';     
+  $sub_array[]='<font color="#000000" size=2><label>'.$row->DESCRIPTION.'</label></font> ';     
+      
+$IS_ACTIVE =($row->is_active==1) ? '<i class="fa fa-check-square-o" style="color:blue;font-size:20px" title="Activé"></i>' : '<i class="fa fa-window-close text-danger" aria-hidden="true" style="font-size:20px" title="Desactivé"></i>';
 
-
-  // if ($get_hist) {
-  //  $btn_historique= '<a href="'.base_url('/administration/Numeriser_New/historique_proprietaires/'.md5($row->id)) .'" 
-  //  class="btn btn-outline-primary btn-sm px-3" title="Historique des propriétaires">
-  //  <i class="fa fa-list"></i>
-  //  </a>';
-  // }
-
-  // $btn_modif ="";
-  // if ($row->statut_bps==1) {
-  //  $btn_modif =  '<a href="'.base_url('/administration/Numeriser_New/Modifier/'.md5($row->id)) .'" 
-  //  class="btn btn-outline-danger btn-sm px-3" title="Changement du propriétaire">
-  //  <i class="fa fa-user"></i>
-  //  </a>';
-  // }
-
-
-  // $button='<div class="d-flex justify-content-center gap-2">
-  // <a href="'.base_url('/administration/Numerisation/info_parcelle/'.md5($row->id)).'"  
-  // class="btn btn-outline-secondary btn-sm px-3" title="'.lang('ajout_parcelle').'">
-  // <i class="fa fa-plus-circle me-2"></i>
-  // </a>
-  // '.$btn_modif.'
-  // '.$btn_historique.'
-  // </div>';            
-  // $sub_array[]=$button;
+$sub_array[]='<font color="#000000" size=2><label>'.$IS_ACTIVE.'</label></font> '; 
+  $USER='';
+$USER= $row->DESCRIPTION.', '. $row->NOM. ' '.$row->PRENOM;
+  $action ="";
+  $action .='
+      <a data-toggle="modal" onclick="get_traiter('.$row->id .',\''.$USER.'\')"> 
+      <label>&nbsp;<span class="fa fa-lock" style="font-size:20px;color:red" title= "Activer/Désactiver"></span></label>
+      </a>
+      ';            
+  $sub_array[]=$action;
   $data[] = $sub_array;
  }
  $output = array(
@@ -129,6 +116,13 @@ WHERE 1";
   "data" => $data
  );
  echo json_encode($output);
+}
+
+public function activer_desactiver($id='')
+{
+ $is_active=$this->input->post('is_active');
+ // historique_desactivation_utilisateurs
+  $this->Model->update("sf_guard_user_profile", array('is_active' =>$is_active , ),array('id' =>$id , ));
 }
 
 }

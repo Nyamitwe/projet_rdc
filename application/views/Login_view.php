@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <?php include VIEWPATH.'includes_ep/Autre_header.php'; ?>
+  <?php //include VIEWPATH.'includes_ep/Autre_header.php'; ?>
       <?php include VIEWPATH.'includes/header.php'; ?>
 </head>
-<body class="inner_page login">
+<body class="inner_page login"> 
   <div class="full_container">
     <div class="container">
       <div class="center verticle_center full_height">
@@ -16,7 +16,7 @@
           </div>
           <div class="login_form">
 
-            <h4 class="text-center">APPLICATION</h4><br>
+            <h4 class="text-center">Se connecter</h4><br>
             <?= $this->session->flashdata('message') ?>
 
 
@@ -61,7 +61,7 @@
 
           <br>
 
-          <center><a style="color: #17a2b8" href="<?= base_url('New_requerant') ?>" ><b> S'inscrire</b></a></center>
+          <center><a style="color: #17a2b8" href="<?= base_url('New_requerant') ?>" ><b>Vous n'avez pas de compte?<br> Inscrivez-vous ici!</b></a></center>
 
 
           <br>
