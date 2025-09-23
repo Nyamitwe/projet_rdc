@@ -1,41 +1,103 @@
   <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <?php include VIEWPATH.'includes/header.php'; ?>
-  </head>
-  <body class="dashboard dashboard_1">
-    <div class="full_container">
-      <div class="inner_container">
+<html lang="en">
+<head>
+ <?php include VIEWPATH.'includes/header.php'; ?>
 
-        <!-- Sidebar  -->
-        <?php include VIEWPATH.'includes/navybar.php'; ?> 
-        <!-- end sidebar -->
-        <!-- right content -->
-        <div id="content">
-          <!-- topbar -->
-          <!-- topbar -->
-          <?php include VIEWPATH.'includes/topbar.php'; ?> 
-          <!-- end topbar -->
-          <!-- end topbar -->
-          <!-- dashboard inner -->
-          <div class="midde_cont">
-            <div class="container-fluid" style="padding: 0px;">
-              <br>
-              <br>
-              <!-- row -->
-              <div class="row column1">
-                <div class="col-md-12">
-                  <div class="white_shd full margin_bottom_30">
-                    <div class="full graph_head">
-                      <!-- <a href="<?=base_url('/Utilisateurs/')?>" class="btn btn-dark" style="float: left;">Liste</a> -->
-                      <br><br>
-                          <a href="<?=base_url('/Utilisateurs/')?>" class="btn btn-primary" style="float: right;"><i style="color: white" class="fa fa-list" aria-hidden="true"></i>Liste</a>
-                              <br><br>
-                     <?=$this->session->flashdata('message')?> 
-                    </div> 
+ <style type="text/css">
+
+   .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #17a2b8;
+  }
+
+
+
+</style>
+
+
+</head>
+<body class="dashboard dashboard_1">
+  <div class="full_container">
+   <div class="inner_container">
+
+    <!-- Sidebar  -->
+    <?php include VIEWPATH.'includes/navybar.php'; ?> 
+    <!-- end sidebar -->
+    <!-- right content -->
+    <div id="content">
+     <!-- topbar -->
+     <?php include VIEWPATH.'includes/topbar.php'; ?> 
+     <!-- end topbar -->
+     <!-- jQuery FIRST -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+     <!-- Select2 AFTER -->
+     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+     <!-- Pour les traductions -->
+     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/i18n/fr.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+     <div class="midde_cont" >
+      <div class="container-fluid">
+        <div class="row column_title">
+          <div class="col-md-12">
+           <div class="page_title">
+
+            <div class="row">
+              <div class="col-md-6">
+                <h2>
+                  <i class="fa fa-user" aria-hidden="true"></i> Nouvel utilisateur
+                </h2>
+              </div>
+              <div class="col-md-3">
+              </div>
+              <div class="col-md-3">
+
+                <!-- Split button -->
+                <div class="btn-group">
+                  <a href="<?= base_url('utilisateurs/Utilisateurs') ?>" class="btn btn-success">
+                      <i style="color: white" class="fa fa-bars" aria-hidden="true"></i>
+                      <label id="tasks_number"></label> Utilisateurs
+                    </a>
+
+                </div>   
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-md-12">
+         <div class="white_shd full margin_bottom_30">
+
+
+          <div class="full graph_head">
+           <div class="heading1 margin_0">
+
+            <div class="row">
+              <div class="col-md-12">
+
+                <?=$this->session->flashdata('message')?>
+                
+              </div> 
+
+
+
+
+              <div class="col-md-2"></div>
+
+            </div>
 
                     <div class="full price_table padding_infor_info">
-                      <form method="POST" id="myformcompt"  enctype="multipart/form-data" action="<?=base_url().'New_Requerant/save'?>">
+                      <form method="POST" id="myformcompt"  enctype="multipart/form-data" action="<?=base_url().'utilisateurs/Utilisateurs/save'?>">
 
                 <div class="row mb-4">
                 
@@ -103,19 +165,25 @@
                       </div>
 
 
-                      <div class="form-group col-lg-6">
-                    <label style="font-weight: 900; color:#454545">Téléphone<span style="color:red;">*</span></label>
-                      <input type="number" maxlength="8" minlength="8" class="form-control" placeholder="Tél" name="TEL1" id="TEL1">
-                      <font color="red" id="erTEL1"  class="help"><?php echo form_error('TEL1'); ?></font>
-                    </div>
+        <div class="form-group col-lg-6">
+          <label style="font-weight: 900; color:#454545">Téléphone<span style="color:red;">*</span></label>
+          <input type="number" maxlength="8" minlength="8" class="form-control" placeholder="Tél" name="TEL1" id="TEL1" oninput="validatePhoneNumber2(this)">
+          <font color="red" id="erTEL1"  class="help"><?php echo form_error('TEL1'); ?></font>
 
-                    <div class="form-group col-lg-6">
-                      <label style="font-weight: 900; color:#454545">E-mail<span class="text-danger">*</span></label>
-                      <input type="email" id="EMAIL" id="EMAIL2"  name="EMAIL" class="form-control" placeholder="E-mail">
-                      <div  id="erEMAIL" class="help text-danger"></div>
-                      <div  id="erEMAIL2" class="help text-danger"></div>
-                      <?php echo form_error('EMAIL', '<div class="text-danger">', '</div>'); ?>
-                    </div>
+          <font color="red" id="erTEL1"  class="help"></font>
+
+          </div>
+              <input type="hidden" id="valide_phone1">
+
+    <div class="form-group col-lg-6">
+      <label style="font-weight: 900; color:#454545">E-mail<span class="text-danger">*</span></label>
+      <input type="email" id="EMAIL" id="EMAIL2"  name="EMAIL" class="form-control" placeholder="E-mail" onblur="verifie_mail1()">
+
+      <div  id="erEMAIL" class="help text-danger"></div>
+      <div  id="erEMAIL2" class="help text-danger"></div>
+    </div>
+
+           <input type="hidden" id="valide_email1" > 
 
                     <div class="col-md-6">     
                       <label for="PASSWORD1" style="font-weight: 900; color:#454545">Mot de passe<font color="red">*</font></label>
@@ -133,10 +201,11 @@
                     <div class="form-group col-lg-9"></div>
                     <br><br>
                     <div class="form-group col-lg-3">
-                      <button type="button" style="margin-top: 20px;float: right;border:1px solid #020f12;" class="main_bt" onclick="verify2()">Enregistrer&nbsp;<span id="loading_spinner2" style="display: none; text-align:center;font-size: 12px">
+                      <button type="button" style="margin-top: 20px;float: right;border:1px solid #020f12;" id="btsave" class="main_bt" onclick="verify2()">Enregistrer&nbsp;<span id="loading_spinner2" style="display: none; text-align:center;font-size: 12px">
                         <i class="fa fa-spinner fa-spin fa-2x text-primary"></i>
                       </span> 
                     </button>
+                    <div class="text-danger" id="erenregistrement"></div>
                   </div>
               </form>
                     </div>
@@ -306,10 +375,19 @@ $("#PROFIL_ID").css("border", "1px solid red");
   console.log(statut)
 } 
 
+if ($('#valide_phone1')<1) {
+  statut = false;
+}
+
+if ($('#valide_email1')<1) {
+  statut = false;
+}
+
 $('#loading_spinner2').hide();
 if (statut==true)
 {
   exist_mail()
+  $('#btsave').attr("disabled", true);
   // exist_username();
 $('#loading_spinner2').show();
 //  myformcompt.submit();
@@ -329,7 +407,7 @@ $('#loading_spinner2').show();
     function exist_mail(){
     var email = $('#EMAIL').val().trim();
     $.ajax({
-  url : "<?=base_url()?>/New_Requerant/verify_email/", 
+  url : "<?=base_url('/utilisateurs/Utilisateurs/verify_email/')?>", 
   type : "POST",
   dataType : "Json",
   data:{
@@ -344,13 +422,14 @@ success:function(data) {
   
    if(data==0){
  $('#loading_spinner2').show();
- $('#loading_spinner2').show();
  myformcompt.submit();
  }else if(data==1){
 
     $("#erEMAIL").html("E-mail existe déjà.");
     $("#EMAIL").css("border", "1px solid red");
 $('#loading_spinner2').hide();
+$('#btsave').attr("disabled", false);
+
  }
  
    },
@@ -361,7 +440,11 @@ $('#loading_spinner2').hide();
     error: function() {
         // 👇 En cas d’erreur serveur
         $('#loading_spinner').hide();
-        alert("Une erreur est survenue. Veuillez réessayer.");
+        $('#erenregistrement').text("Une erreur est survenue. Veuillez réessayer.");
+ $('#loading_spinner2').hide();
+ $('#btsave').attr("disabled", false);
+
+
     }
 
 });
@@ -370,6 +453,54 @@ $('#loading_spinner2').hide();
   
      
    </script>
+
+
+   <script type="text/javascript">
+function verifie_mail1() {
+    const emailField = document.getElementById("EMAIL");
+    const email = emailField.value.trim();
+    const err = document.getElementById("erEMAIL");
+
+    // Regex plus rigoureuse : accepte nom@domaine.ext, avec quelques cas valides
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    $("#valide_email1").val(1);
+    err.textContent = "";
+
+    if (email === "") {
+        err.textContent = "L'adresse e-mail est obligatoire.";
+        $("#valide_email1").val(0);
+        return false;
+    }
+
+    else if (!regex.test(email)) {
+        err.textContent = "Format de l'adresse e-mail invalide.";
+        // emailField.value = '';
+        $("#valide_email1").val(0);
+        return false;
+    } 
+}
+
+
+
+function validatePhoneNumber2(input) {
+              const value = input.value.replace(/\D/g, ''); // Supprime tous les caractères non numériques
+              // alert(value)
+              input.value = value; // Met à jour l'input sans les lettres ou symboles
+
+              const errorSpan = document.getElementById("erTEL1");
+              $('#valide_phone1').val(1);
+
+              if (value.length < 8 || value.length > 12) {
+                  $('#valide_phone1').val(0); // Valide
+                  errorSpan.textContent = "Numéro de téléphone invalide.";
+              } else {
+                  errorSpan.textContent = "";
+                  $('#valide_phone1').val(1); // Valide
+                  // NUM_TEL_PROP2
+              }
+          }
+
+
 
 
 

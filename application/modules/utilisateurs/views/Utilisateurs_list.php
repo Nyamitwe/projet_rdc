@@ -59,7 +59,7 @@
 
                 <!-- Split button -->
                 <div class="btn-group">
-                  <a href="<?= base_url('New_requerant') ?>" class="btn btn-success">
+                  <a href="<?= base_url('utilisateurs/Utilisateurs/nouveau') ?>" class="btn btn-success">
                       <i style="color: white" class="fa fa-plus" aria-hidden="true"></i>
                       <label id="tasks_number"></label> Nouvel utilisateur
                     </a>
@@ -306,7 +306,7 @@ function get_traiter(id, info) {
 
         "order":[[0, 'asc' ]],
         "ajax":{
-          url:'<?=base_url()?>Utilisateurs/listing',
+          url:'<?=base_url()?>utilisateurs/Utilisateurs/listing',
           data:{
           },
           type:"POST",

@@ -2,7 +2,7 @@
 
 /** 
  *@author Nadvaxe2024
- *advaxe@mediabox.bi /61128298
+ *advaxe@mediabox.bi /61128298 
  *Commencé le 26 février 2024
  * Gestion des Authentification depuis pms_api library
  */
@@ -103,7 +103,7 @@ class Login extends CI_Controller
 				);
 
 				$this->session->set_userdata($session);
-					redirect(base_url('Utilisateurs'));
+					redirect(base_url('utilisateurs/Utilisateurs'));
 				
 			} else {
 				$sms = '<div class="alert alert-warning alert-dismissible fade show" role="alert">
