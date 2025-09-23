@@ -2,6 +2,24 @@
 <html lang="en">
 <head>
   <?php //include VIEWPATH.'includes_ep/Autre_header.php'; ?>
+  <style type="text/css">
+  .main_bt2 {
+    background-color: transparent;
+    color: #51878e;
+    border: 2px solid #51878e;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.main_bt2:hover {
+    background-color: #51878e;
+    color: #fff;
+}
+</style>
+
       <?php include VIEWPATH.'includes/header.php'; ?>
 </head>
 <body class="inner_page login"> 
@@ -9,14 +27,16 @@
     <div class="container">
       <div class="center verticle_center full_height">
         <div class="login_section">
-          <div class="logo_login">
+          <br>
+          <div class="logo_login_">
             <div class="center">
-              <img width="100" src="<?php echo base_url() ?>template/images/DTF_light_logo.png" alt="#" />
+              <!-- <img width="100" src="<?php echo base_url() ?>template/images/DTF_light_logo.png" alt="#" /> -->
+              <button class="main_bt" style="background: #51878e">StarAfrica-Group</button></span>
             </div>
           </div>
           <div class="login_form">
 
-            <h4 class="text-center">Se connecter</h4><br>
+            <!-- <h4 class="text-center">Se connecter</h4><br> -->
             <?= $this->session->flashdata('message') ?>
 
 
@@ -40,20 +60,21 @@
                 <div class="form-group col-lg-12">
                   <div class="row">
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <input type="checkbox" onclick="myFunction()"> Afficher le mot de passe
-                    </div>
+                    </div><br>
+                    <div class="col-md-12">,</div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                       <a class="#" href="<?= base_url('Modif_Pwd') ?>">Mot de passe oublié ?</a>
                     </div>
 
                   </div>
                 </div>
                 <center>
-                  <button class="main_bt" type="submit" id="sign">Se connecter</button>
+                  <button class="main_bt2" type="submit" id="sign">Se connecter</button>
                 </center>
-              </fieldset>
+              </fieldset> 
             </form>  
 
 
@@ -61,7 +82,7 @@
 
           <br>
 
-          <center><a style="color: #17a2b8" href="<?= base_url('New_requerant') ?>" ><b>Vous n'avez pas de compte?<br> Inscrivez-vous ici!</b></a></center>
+          <!-- <center><a style="color: #17a2b8" href="<?= base_url('New_requerant') ?>" ><b>Vous n'avez pas de compte?<br> Inscrivez-vous ici!</b></a></center> -->
 
 
           <br>

@@ -13,14 +13,14 @@ Eric ndayizeye
          }
 
         //Fonction principale
-
-         function index()
+ function index()
          {
           
            $data['nationalites']=$this->Model->getRequete('SELECT * FROM countries');
            $data['profiles']=$this->Model->getRequete('SELECT * FROM profiles');
            $this->load->view('New_Requerant_View',$data);
        }
+        
 
       //Enregistrement des donnees dans la base
 function save()
@@ -97,28 +97,6 @@ public function upload_file_signature($input_name)
     $repertoire_fichier = FCPATH . 'uploads/doc_scanner/';  
     $code=uniqid();
     $name=$code . 'SIGNATURE.' .$ext;
-    $file_link = $repertoire_fichier . $name;
-
-
-        // $fichier = basename($nom_champ);
-    if (!is_dir($repertoire_fichier)) {
-        mkdir($repertoire_fichier, 0777, TRUE);
-    }
-    move_uploaded_file($nom_file, $file_link);
-    return $name;
-}
-
-
-
-    //PERMET L'UPLOAD DE L'IMAGE CNI / PASSEPORT
-public function upload_file_cni($input_name)
-{
-    $nom_file = $_FILES[$input_name]['tmp_name'];
-    $nom_champ = $_FILES[$input_name]['name'];
-    $ext=pathinfo($nom_champ, PATHINFO_EXTENSION);
-    $repertoire_fichier = FCPATH . 'uploads/doc_scanner/';
-    $code=uniqid();
-    $name=$code . 'IMAGE_CNI.' .$ext;
     $file_link = $repertoire_fichier . $name;
 
 

@@ -1,11 +1,7 @@
 <?php 
 
 	/**
-	 * Ir raoul 
-     * 71246149 
-     * raoul@mediabox.bi
-	   Creation des comptes, connexion des utilisateurs, voulant demander des transferts mais n ayant pas de comptes dans le systeme.
-	   Le 26/03/2024
+	 *NDAYIZEYE ERIC
 	 */
       class New_Requerant extends CI_Controller
       {
@@ -27,71 +23,6 @@
            $this->load->view('New_Requerant_View',$data);
        }
 
-        //recherche des communes a partir de la province
-       function get_commune()
-       {
-           $commune= $this->Model->getList("communes",array('PROVINCE_ID'=>$this->input->post('PROVINCE_ID')));
-
-           $datas= '<select type="text" class="form-control" name="COMMUNE_ID" id="COMMUNE_ID">  <option value="">Sélectionner</option>';
-
-
-
-           foreach($commune as $commun){
-
-
-              $datas.= '<option value="'.$commun["COMMUNE_ID"].'">'.$commun["COMMUNE_NAME"].'</option>';
-          }
-
-          $datas.= '</select>';
-
-          echo $datas;
-
-      }
-
-      //recherche des zones a partir de la commune
-      function get_zone()
-      {
-
-        $commune= $this->Model->getList("pms_zones",array('COMMUNE_ID'=>$this->input->post('COMMUNE_ID')));
-
-        $datas= '<select type="text" class="form-control" name="ZONE_ID" id="ZONE_ID">  <option value="">Sélectionner</option>';
-
-        foreach($commune as $commun)
-        {
-
-
-          $datas.= '<option value="'.$commun["ZONE_ID"].'">'.$commun["ZONE_NAME"].'</option>';
-      }
-
-      $datas.= '</select>';
-
-      echo $datas;
-
-  }
-
-
-      //recherche des collines a partir de la province
-  function get_colline()
-  {
-
-    $commune= $this->Model->getList("collines",array('ZONE_ID'=>$this->input->post('ZONE_ID')));
-
-    $datas= '<select type="text" class="form-control" name="ZONE_ID" id="ZONE_ID"  >
-    <option value="">Sélectionner</option>';
-
-    foreach($commune as $commun){
-
-
-      $datas.= '<option value="'.$commun["COLLINE_ID"].'">'.$commun["COLLINE_NAME"].'</option>';
-  }
-
-  $datas.= '</select>';
-
-  echo $datas;
-
-}
-
-      //Enregistrement des donnees dans la base
 function save()
 {
       //$get_parcelle = $this->Model->getRequeteOne('SELECT * FROM  pms_parcelle WHERE EST_OCCUPE=0'); 
