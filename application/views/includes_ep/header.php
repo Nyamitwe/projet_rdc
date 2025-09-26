@@ -14,7 +14,7 @@
 
     <meta name="copyright" content="Mediabox Burundi, https://mediabox.bi/">
     <!-- site metas -->
-      <title>Property Management Systemççççç</title>
+      <title>StarAfrica-Group</title>
     <!-- site icon -->
     <link rel="icon" href="<?= base_url() ?>template_ep/images/favicon-16x16.png" type="image/png" />
     <!-- bootstrap css -->
