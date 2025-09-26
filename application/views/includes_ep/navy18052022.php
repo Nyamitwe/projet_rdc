@@ -31,7 +31,7 @@
 
 
             
-            <div class="dropdown right_topbar mt-4 mr-4">
+           <!--  <div class="dropdown right_topbar mt-4 mr-4">
 
                                   
                 <a class="text-white dropdown-toggle" role="button" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,7 +42,7 @@
 
                      <a class="dropdown-item <?php if($this->session->userdata('site_lang')=='english') echo 'active' ?>" href="<?php echo base_url(); ?>Language/index/english"> English</a>
                 </div>
-            </div>
+            </div> -->
 
 
         </div>

@@ -31,7 +31,7 @@ $requetes_active      = ($get_url1 == 'Traitement_Transfert_Titre_Foncier7');
             <a href="#">
                 <img width="150" class="img-responsive" src="<?= base_url('template/images/pms_logo.svg') ?>" alt="Logo PMS" />
             </a>
-            <h5 class="text-white">STARAFRICA GROUP</h5>
+            <h5 class="text-white">StarAfrica Group</h5>
         </div>
     </div>
 
@@ -89,7 +89,19 @@ $requetes_active      = ($get_url1 == 'Traitement_Transfert_Titre_Foncier7');
                     </li>
                     <li class="<?= ($get_url3 == 'Nouveau') ? 'active' : '' ?>">
                         <a href="<?= base_url('utilisateurs/Utilisateurs/Nouveau') ?>">
-                            <span>Nouveau</span>
+                            <span>Nouvel utilisateur</span>
+                        </a>
+                    </li>
+
+                    <li class="<?= ($get_url2 == 'Utilisateurs') ? 'active' : '' ?>">
+                        <a href="<?= base_url('utilisateurs/Employe/') ?>">
+                            <span>Employés</span>
+                        </a>
+                    </li>
+
+                    <li class="<?= ($get_url3 == 'Nouveau') ? 'active' : '' ?>">
+                        <a href="<?= base_url('utilisateurs/Employe/Nouveau') ?>">
+                            <span>Nouvel employé</span>
                         </a>
                     </li>
                 </ul>

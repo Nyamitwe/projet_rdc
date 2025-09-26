@@ -14,18 +14,13 @@
         if (!empty($getImg['profile_pic'])) {
         ?>
 
-    <?php if($this->session->userdata('PMS_PROFIL_ID')==3 || $this->session->userdata('PMS_PROFIL_ID')>7){
-      ?>
-
     <!-- <img width="100px" src="<?= base_url() ?>uploads/requerant/<?=$getImg['profile_pic']?>">  -->
     <img width="100px" src="<?= base_url() ?>uploads/doc_scanner/<?=$getImg['profile_pic'] ?>">
 
         <?php }else{?>
 
  <img width="100px" src="<?= base_url() ?>template_ep/images/avatar_male.png">
-       <?php
-        }
-        ?>
+       
         
 
 <!-- 
