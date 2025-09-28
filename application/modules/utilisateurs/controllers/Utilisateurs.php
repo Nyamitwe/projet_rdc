@@ -91,21 +91,29 @@ foreach ($fetch_users as $row)
   $sub_array=array(); 
   $sub_array[]='<font color="#000000" size=2><label>'.$u.'</label></font>';
   $sub_array[]='<font color="#000000" size=2><label>'.$row->NOM.' '.$row->PRENOM.'</label></font> ';
-  $sub_array[]='<font color="#000000" size=2><label>'.$row->email.'</label></font> ';
-  $sub_array[]='<font color="#000000" size=2><label>'.$row->mobile.'</label></font> ';     
+  // $sub_array[]='<font color="#000000" size=2><label>'.$row->email.'</label></font> ';
+  // $sub_array[]='<font color="#000000" size=2><label>'.$row->mobile.'</label></font> ';     
   $sub_array[]='<font color="#000000" size=2><label>'.$row->DESCRIPTION.'</label></font> ';     
   
-  $IS_ACTIVE =($row->is_active==1) ? '<i class="fa fa-check-square-o" style="color:blue;font-size:20px" title="Activé"></i>' : '<i class="fa fa-window-close text-danger" aria-hidden="true" style="font-size:20px" title="Desactivé"></i>';
+  // $IS_ACTIVE =($row->is_active==1) ? '<i class="fa fa-check-square-o" style="color:blue;font-size:20px" title="Activé"></i>' : '<i class="fa fa-window-close text-danger" aria-hidden="true" style="font-size:20px" title="Desactivé"></i>';
 
-  $sub_array[]='<font color="#000000" size=2><label>'.$IS_ACTIVE.'</label></font> '; 
+  // $sub_array[]='<font color="#000000" size=2><label>'.$IS_ACTIVE.'</label></font> '; 
   $USER='';
   $USER= $row->DESCRIPTION.', '. $row->NOM. ' '.$row->PRENOM;
   $action ="";
-  $action .='
-  <a data-toggle="modal" onclick="get_traiter('.$row->id .',\''.$USER.'\')"> 
-  <label>&nbsp;<span class="fa fa-lock" style="font-size:20px;color:red" title= "Activer/Désactiver"></span></label>
-  </a>
-  ';            
+  // $action .='
+  // <a data-toggle="modal" onclick="get_traiter('.$row->id .',\''.$USER.'\')"> 
+  // <label>&nbsp;<span class="fa fa-lock" style="font-size:20px;color:red" title= "Activer/Désactiver"></span></label>
+  // </a>
+  // ';    
+
+  // ' . base_url('utilisateurs/employe/Details/' . md5($row->id)) . '  
+
+  $action .= '<span data-toggle="tooltip" data-placement="top" class="actionCust" title="Détails">
+    <a href="' . base_url('utilisateurs/Utilisateurs/Details/' . md5($row->id)) . '">
+        <i class="fa fa-bars" style="font-size:20px;color:black"></i>
+    </a>
+</span>';      
   $sub_array[]=$action;
   $data[] = $sub_array;
 }
@@ -123,6 +131,38 @@ public function activer_desactiver($id='')
  $is_active=$this->input->post('is_active');
  // historique_desactivation_utilisateurs
  $this->Model->update("sf_guard_user_profile", array('is_active' =>$is_active , ),array('id' =>$id , ));
+}
+
+
+public function Details($cond=0)
+{
+$contrat = $this->input->post('contrat');
+ $rq=$this->Model->getRequeteOne("SELECT 
+ sf_guard_user_profile.id id,
+ NOM,
+ PRENOM,
+ email,
+ is_active,
+ mobile,
+ countries.name,
+ sf_guard_user_profile.PROFIL_ID,
+ profiles.DESCRIPTION,
+ IF(SEXE_ID = 1, 'Masculin', 'Féminin') AS SEXE,
+ IF(is_active = 1, 'Actif', 'Inactif') AS ETAT
+ FROM sf_guard_user_profile left join profiles on profiles.PROFIL_ID= sf_guard_user_profile.PROFIL_ID
+ LEFT join countries on countries.id=sf_guard_user_profile.country_code
+ WHERE  md5(sf_guard_user_profile.id)=
+'".$cond."' ");
+ ;
+
+$data["data"] = $rq;
+
+ $this->load->view('Utilisateurs_Details', $data);
+
+}
+
+function secureOutput($text) {
+    return htmlspecialchars(strip_tags($text ?? ''), ENT_QUOTES, 'UTF-8');
 }
 
 
