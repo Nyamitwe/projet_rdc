@@ -4,14 +4,14 @@
   <?php include VIEWPATH.'includes/header.php'; ?>
 
   <style type="text/css">
-    .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+   /* .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
       color: #fff;
       background-color: #17a2b8;
     }
     .table-responsive {
       overflow-x: auto;
       max-width: 100%;
-    }
+    } */
   </style>
 </head>
 <body class="dashboard dashboard_1">
@@ -56,6 +56,7 @@
              </div>
            </div>
          </div>
+         
          <div class="row">
           <div class="col-md-12">
             <div class="white_shd full margin_bottom_30">
@@ -126,28 +127,48 @@
               </div>
 
            <br>
-                  <div class="full price_table padding_infor_info">                      
+                 <!--  <div class="full price_table padding_infor_info">                      
                     <?php if (!empty($message)) : ?>
                     <div class="alert alert-success text-center" id="message"><?php echo $message; ?></div>
                     <?php endif; ?>
                     <div class="table-responsive" style="overflow: auto;">
-                      <table id='mytable' class="table table-bordered table-striped table-hover table-responsive" cellspacing="0" width="100%">
+                      <table id='mytable' class="table table-bordered table-striped table-hover table-responsive" cellspacing="0">
                         <thead>
                           <tr>
-        <th width="5%">#</th>
-        <th width="20%">Nom</th>
-        <th width="20%">Contact</th>
-        <th width="20%">Poste</th>
-        <th width="20%">Contrat</th>
-        <!-- <th width="15%">Date recrutement</th> -->
-        <!-- <th width="4%">Etat</th> -->
-        <th width="15%">Action</th>
+        <th width="10%">#</th>
+        <th width="30%">Nom</th>
+        <th width="30%">Poste</th>
+
+        <th width="40%">Action</th>
       </tr>
                         </thead>
                         <tbody></tbody>
                       </table>
                     </div>
-                  </div>
+                  </div> -->
+
+                  <div class="full price_table padding_infor_info">
+
+
+           <br>
+           <table id='mytable' class="table table-sm table-bordered table-hover table-striped" 
+           data-toggle="table" data-search="true" data-show-columns="true" data-pagination="true">
+           <thead> 
+            <tr>
+              <th width="10" scope='col'>#</th>
+              <th width="40" scope='col'>Nom</th>
+              <th width="30" scope='col'>Poste</th>
+<!--               <th width="20" scope='col'>Téléphone</th>
+              <th width="15" scope='col'>Profile</th>
+              <th width="10" scope='col'>Etat</th> -->
+              <th width="20" scope='col'>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table> 
+      </div>
+
+
                 </div>
               </div>
             </div>
@@ -160,98 +181,6 @@
 </div>
 </body>
 
- <div class="modal fade" id="docmodal" tabindex="-1"
-                aria-labelledby="exampleModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-                <div class='modal-dialog' style ="max-width: 50%;">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title text-white" id="exampleModalLabel">Activer/Désactiver l'employé &nbsp;<a id="user_info"></a>
-                      </h5>
-                    </div>
-                    <form id="Forminfo" enctype="multipart/form-data" method="post"
-                    style="margin-left:12px" action="<?= base_url('/Utilisateurs/activer_desactiver') ?>" name="Forminfo">
-                    <div class="modal-body">
-                      <input type="hidden" name="user_id" id="user_id">
-                      <div class="row">
-
-                        <div class='col-md-6'>     
-                          <label for='STATUT_DES'>Status<font color='red'>*</font></label>
-                          <select name='STATUT_DES' id='STATUT_DES'
-                          class='form-control'>
-                          <option value="">_</option>
-                          <option value="1">Activer</option>
-                          <option value="0">Désactiver</option>
-                        </select>
-                        <div class='text-danger' id='errorSTATUT_DES'></div>
-                      </div>
-
-                      <div class='col-md-6'>     
-                        <label for='MOTIF'>Motif<font color='red'>*</font></label>
-                        <textarea name='MOTIF' id='MOTIF' class='form-control'></textarea>
-                        <div class='text-danger' id='errorMOTIF'></div>
-                      </div>
-                    </div>
-                  </div>
-
-                </form>
-                <div class="modal-footer">
-                  <input class="btn btn-secondary" type="button" id="btn_add"
-                  value="Enregistrer" onclick="save_traiter();" />
-                  <input type="button" class="btn btn-default" data-dismiss="modal"
-                  onclick="hide_modal()"  value="Fermer" />
-                </div>
-              </div>
-            </div>
-          </div> 
-
-<!-- Modal : envoyer le requerant dans bps -->
-<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header" style="background: #1b7a6c;">
-        <h5 class="modal-title text-white" id="staticBackdropLabel"><?=lang('liste_parcelle')?></h5>
-        <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-       
-
-      <div class="full price_table padding_infor_info modal-body">
-
-        <div class="table-responsive" style="overflow: auto;">
-          <table id='mytable' class="table table-bordered table-striped table-hover table-responsive" cellspacing="0" width="100%">
-            <table id="mytable" class="table table-sm table-bordered table-hover table-striped responsive"
-         data-toggle="table"
-         data-search="true"
-         data-show-columns="true"
-         data-pagination="true"
-         data-mobile-responsive="true"
-         data-min-width="768">
-    <thead>
-      <tr>
-        <th width="2%">#</th>
-        <th width="20%">Nom</th>
-        <th width="30%">Contact</th>
-        <th width="25%">Poste</th>
-        <th width="19%">Contrat</th>
-        <!-- <th width="15%">Date recrutement</th> -->
-        <!-- <th width="4%">Etat</th> -->
-        <th width="4%">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Tes données ici -->
-    </tbody>
-  </table>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <?php include VIEWPATH.'includes/scripts_js.php'; ?>
 

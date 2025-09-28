@@ -47,7 +47,7 @@
                                  <li>
                                     <a class="dropdown-toggle" data-toggle="dropdown"><span class="username"><i style="font-size: 22px;" class="fa fa-user-circle-o" aria-hidden="true"></i> <?=$this->session->userdata('PMS_NOM').' '.$this->session->userdata('PMS_PRENOM')?></span></a>
                                     <div class="dropdown-menu">
-                                       <a class="dropdown-item" href="<?= base_url() ?>parametrage/Backend_User_profile">Profil</a>
+                                       <a class="dropdown-item" href="<?= base_url() ?>Utilisateurs/Profile">Profil</a>
                                        <a style="color: red" class="dropdown-item" href="<?= base_url() ?>Login/do_logout"><span>Déconnexion</span> <i class="fa fa-sign-out"></i></a>
                                     </div>
                                  </li>

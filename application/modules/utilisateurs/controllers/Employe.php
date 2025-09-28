@@ -127,9 +127,9 @@ foreach ($fetch_users as $row)
   $sub_array=array(); 
   $sub_array[]='<font color="#000000" ><label>'.$u.'</label></font>';
   $sub_array[]='<font color="#000000" ><label>'.$row->NOM.' '.$row->PRENOM.'</label></font> ';
-  $sub_array[]='<font color="#000000" ><label>
-'.$row->email.'</label></font> '.'<br>'.'<font color="#000000" ><label>
-'.$row->mobile.'</label></font> ';
+//   $sub_array[]='<font color="#000000" ><label>
+// '.$row->email.'</label></font> '.'<br>'.'<font color="#000000" ><label>
+// '.$row->mobile.'</label></font> ';
 
 $rowfetch = ($row->POSTE_ID!=0 ? $row->POSTE : $row->AUTRE_POSTE);
 $rowfetchcount=str_replace('/','',$rowfetch);
@@ -143,10 +143,8 @@ if ($rowcount>30) {
         }
 
 
-  // $sub_array[]='<font color="#000000" ><label>'.($row->POSTE_ID!=0 ? $row->POSTE : $row->AUTRE_POSTE) .'</label></font> ';
-
-  $sub_array[]='<font color="#000000" ><label>'.$row->CONTRAT.($row->TYPE_CONTRAT_ID==1 ? "<br>Expire le ". date('d/m/Y', strtotime($row->DATE_EXPIRATION)) : "" ).'<br>Recru :'.date('d/m/Y', strtotime($row->DATE_RECRUTEMENT)).'</label></font> ';     
-  // $sub_array[]='<font color="#000000" ><label>'.date('d/m/Y', strtotime($row->DATE_RECRUTEMENT)). '</label></font> ';     
+  // $sub_array[]='<font color="#000000" ><label>'.$row->CONTRAT.($row->TYPE_CONTRAT_ID==1 ? "<br>Expire le ". date('d/m/Y', strtotime($row->DATE_EXPIRATION)) : "" ).'<br>Recru :'.date('d/m/Y', strtotime($row->DATE_RECRUTEMENT)).'</label></font> ';
+     
   
   $IS_ACTIVE =($row->is_active==1) ? '<i class="fa fa-check-square-o" style="color:blue;font-size:20px" title="Activé"></i>' : '<i class="fa fa-window-close text-danger" aria-hidden="true" style="font-size:20px" title="Desactivé"></i>';
 
@@ -154,12 +152,30 @@ if ($rowcount>30) {
   $USER='';
   $USER= $row->DESCRIPTION.', '. $row->NOM. ' '.$row->PRENOM;
   $action ="";
-  $action .='
+  /*$action .='
   <a data-toggle="modal" onclick="get_traiter('.$row->id .',\''.$USER.'\')"> 
   <label>&nbsp;<span class="fa fa-lock" style="font-size:20px;color:red" title= "Activer/Désactiver"></span></label>
   </a>
-  ';            
-  $sub_array[]=$action;
+  '; */
+
+ $action = '<div style="display: flex; gap: 10px;">';
+
+// $action .= '<span data-toggle="tooltip" data-placement="top" class="actionCust" title="Activer/Désactiver">
+//     <a href="' . base_url('utilisateurs/Employe/activer_desactiver/' . md5($row->id)) . '">
+//         <i class="fa fa-lock" style="font-size:20px;color:red"></i>
+//     </a>
+// </span>';
+
+$action .= '<span data-toggle="tooltip" data-placement="top" class="actionCust" title="Détails">
+    <a href="' . base_url('utilisateurs/Employe/Details/' . md5($row->id)) . '">
+        <i class="fa fa-bars" style="font-size:20px;color:black"></i>
+    </a>
+</span>';
+
+$action .= '</div>';
+
+$sub_array[] = $action;
+
   $data[] = $sub_array;
 }
 $output = array(
@@ -171,14 +187,89 @@ $output = array(
 echo json_encode($output);
 }
 
-public function activer_desactiver($id='')
+public function activer_desactiver($id = '')
 {
- $is_active=$this->input->post('is_active');
- // historique_desactivation_utilisateurs
- $this->Model->update("sf_guard_user_profile", array('is_active' =>$is_active , ),array('id' =>$id , ));
+    // Sécurisation et validation
+    if (empty($id)) {
+        echo json_encode(['success' => false, 'message' => 'ID manquant']);
+        return;
+    }
+
+    $is_active = $this->input->post('statut');
+    $id = $this->input->post('id');
+
+    if (!in_array($is_active, ['0', '1'])) {
+        echo json_encode(['success' => false, 'message' => 'Valeur is_active invalide']);
+        return;
+    }
+
+    // Vérifier si l'utilisateur existe
+    $user = $this->Model->getOne('sf_guard_user_profile', ['id' => $id]);
+    if (!$user) {
+        echo json_encode(['success' => false, 'message' => 'Utilisateur introuvable']);
+        return;
+    }
+
+    // Mise à jour du statut
+    $this->Model->update('sf_guard_user_profile', ['is_active' => $is_active], ['id' => $id]);
+
+    // Historique (optionnel)
+    $this->Model->insert('historique_desactivation_utilisateurs', [
+        'user_id' => $id,
+        'action' => $is_active,
+        'date_action' => date('Y-m-d H:i:s'),
+        'admin_id' => $this->session->userdata('id') // si session admin
+    ]);
+
+    echo json_encode(['success' => true, 'message' => 'Statut mis à jour']);
 }
 
 
+
+
+public function Details($cond=0)
+{
+$contrat = $this->input->post('contrat');
+ $rq=$this->Model->getRequeteOne("SELECT 
+  u.id,
+  u.NOM,
+  u.PRENOM,
+  u.email,
+  u.is_active,
+  u.mobile,
+  employes.TYPE_CONTRAT_ID,
+  employes.POSTE_ID,
+  po.DESCRIPTION AS POSTE,
+  employes.AUTRE_POSTE,
+  u.PROFIL_ID,
+  PATH_CV,
+  PATH_DIPLOME,
+  profiles.DESCRIPTION ,
+  co.DESCRIPTION AS CONTRAT,
+  employes.DATE_EXPIRATION,
+  employes.DATE_RECRUTEMENT,
+  countries.name,
+  IF(u.sexe_id = 1, 'Masculin', 'Féminin') AS SEXE,
+  IF(u.is_active = 1, 'Actif', 'Inactif') AS ETAT
+FROM sf_guard_user_profile u
+LEFT JOIN profiles ON profiles.PROFIL_ID = u.PROFIL_ID
+JOIN employes ON employes.UTILISATEUR_ID = u.id
+LEFT JOIN poste_occupe po ON po.POSTE_ID = employes.POSTE_ID
+LEFT JOIN type_contrat co ON co.TYPE_CONTRAT_ID = employes.TYPE_CONTRAT_ID
+LEFT join countries on countries.id=u.country_code
+WHERE md5(u.id)=
+'".$cond."' ");
+ ;
+
+$data["data"] = $rq;
+
+ $this->load->view('Employe_Details', $data);
+
+}
+
+function secureOutput($text) {
+    return htmlspecialchars(strip_tags($text ?? ''), ENT_QUOTES, 'UTF-8');
+}
 
 function nouveau()
 {

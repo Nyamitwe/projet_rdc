@@ -159,13 +159,13 @@
            data-toggle="table" data-search="true" data-show-columns="true" data-pagination="true">
            <thead> 
             <tr>
-              <th width="2" scope='col'>#</th>
-              <th width="28" scope='col'>Nom</th>
-              <th width="25" scope='col'>E-mail</th>
-              <th width="20" scope='col'>Téléphone</th>
-              <th width="15" scope='col'>Profile</th>
-              <th width="10" scope='col'>Etat</th>
-              <th width="10" scope='col'>Action</th>
+              <th width="10" scope='col'>#</th>
+              <th width="40" scope='col'>Nom</th>
+              <!-- <th width="25" scope='col'>E-mail</th> -->
+              <!-- <th width="20" scope='col'>Téléphone</th> -->
+              <th width="40" scope='col'>Profile</th>
+              <!-- <th width="10" scope='col'>Etat</th> -->
+              <th width="20" scope='col'>Action</th>
             </tr>
           </thead>
           <tbody></tbody>
